@@ -131,4 +131,20 @@ class DiaryDetailViewModel @Inject constructor(
     fun clearError() {
         _state.value = _state.value.copy(error = null)
     }
+
+    /**
+     * 日記を削除
+     */
+    fun deleteDiary() {
+        viewModelScope.launch {
+            try {
+                state.value.diary?.let { diary ->
+                    repository.deleteDiary(diary)
+                    _state.value = _state.value.copy(isSaved = true)
+                }
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(error = e.message)
+            }
+        }
+    }
 }

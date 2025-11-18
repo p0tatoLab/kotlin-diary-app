@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,6 +20,7 @@ fun DiaryDetailScreen(
     onNavigateBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
+    var showDeleteDialog by remember { mutableStateOf(false) }
 
     // 保存完了時に戻る
     LaunchedEffect(state.isSaved) {
@@ -40,6 +39,12 @@ fun DiaryDetailScreen(
                     }
                 },
                 actions = {
+                    // 編集モードの場合のみ削除ボタンを表示
+                    if (state.diary != null) {
+                        IconButton(onClick = { showDeleteDialog = true }) {
+                            Icon(Icons.Default.Delete, contentDescription = "削除")
+                        }
+                    }
                     IconButton(onClick = { viewModel.saveDiary() }) {
                         Icon(Icons.Default.Check, contentDescription = "保存")
                     }
@@ -98,6 +103,30 @@ fun DiaryDetailScreen(
                 )
             }
         }
+    }
+
+    // 削除確認ダイアログ
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("確認") },
+            text = { Text("この日記を削除しますか？") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.deleteDiary()
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("削除")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text("キャンセル")
+                }
+            }
+        )
     }
 }
 
