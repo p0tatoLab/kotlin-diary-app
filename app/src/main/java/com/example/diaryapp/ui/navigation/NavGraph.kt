@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.diaryapp.ui.screens.DiaryDetailScreen
 import com.example.diaryapp.ui.screens.DiaryListScreen
+import com.example.diaryapp.ui.screens.StatisticsScreen
 
 @Composable
 fun NavGraph(
@@ -25,6 +26,9 @@ fun NavGraph(
                 },
                 onAddClick = {
                     navController.navigate(Screen.DiaryDetail.createRoute(null))
+                },
+                onStatisticsClick = {
+                    navController.navigate(Screen.Statistics.route)
                 }
             )
         }
@@ -40,6 +44,15 @@ fun NavGraph(
             )
         ) {
             DiaryDetailScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        // 統計画面
+        composable(route = Screen.Statistics.route) {
+            StatisticsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

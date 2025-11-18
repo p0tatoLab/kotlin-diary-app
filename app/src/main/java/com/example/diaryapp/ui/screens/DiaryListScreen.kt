@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
@@ -24,13 +25,15 @@ import java.util.*
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
+import com.example.diaryapp.util.DateUtils
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DiaryListScreen(
     viewModel: DiaryListViewModel = hiltViewModel(),
     onDiaryClick: (Long) -> Unit,
-    onAddClick: () -> Unit
+    onAddClick: () -> Unit,
+    onStatisticsClick: () -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
@@ -70,6 +73,13 @@ fun DiaryListScreen(
                 TopAppBar(
                     title = { Text("日記") },
                     actions = {
+                        // 統計ボタン追加
+                        IconButton(onClick = onStatisticsClick) {
+                            Icon(
+                                imageVector = androidx.compose.material.icons.Icons.Default.BarChart,
+                                contentDescription = "統計"
+                            )
+                        }
                         IconButton(onClick = { isSearching = true }) {
                             Icon(Icons.Default.Search, contentDescription = "検索")
                         }
@@ -181,7 +191,7 @@ fun DiaryListItem(
                         style = MaterialTheme.typography.headlineMedium
                     )
                     Text(
-                        text = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(diary.date),
+                        text = DateUtils.getRelativeTimeString(diary.date),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

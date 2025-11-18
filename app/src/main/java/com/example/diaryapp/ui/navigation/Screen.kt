@@ -11,4 +11,5 @@ sealed class Screen(val route: String) {
             }
         }
     }
+    object Statistics : Screen("statistics")
 }

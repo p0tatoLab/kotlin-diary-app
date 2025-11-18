@@ -5,26 +5,37 @@
     <string name="home_title">日記</string>
     <string name="new_diary">新しい日記</string>
     <string name="edit_diary">日記を編集</string>
+    <string name="statistics_title">統計</string>
 
     <!-- ボタン -->
     <string name="save">保存</string>
     <string name="delete">削除</string>
     <string name="cancel">キャンセル</string>
+    <string name="search">検索</string>
 
     <!-- ヒント -->
     <string name="title_hint">タイトル</string>
     <string name="content_hint">今日はどんな日でしたか？</string>
+    <string name="search_hint">検索...</string>
 
     <!-- メッセージ -->
     <string name="saved">保存しました</string>
     <string name="deleted">削除しました</string>
     <string name="empty_diary">まだ日記がありません</string>
+    <string name="no_search_results">検索結果がありません</string>
     <string name="confirm_delete">この日記を削除しますか？</string>
+    <string name="error_empty_title">タイトルを入力してください</string>
 
     <!-- 気分 -->
+    <string name="mood_label">今日の気分</string>
     <string name="mood_great">最高</string>
     <string name="mood_good">良い</string>
     <string name="mood_neutral">普通</string>
     <string name="mood_bad">悪い</string>
     <string name="mood_terrible">最悪</string>
+
+    <!-- 統計 -->
+    <string name="total_diaries">総日記数</string>
+    <string name="mood_breakdown">気分の内訳</string>
+    <string name="count_unit">件</string>
 </resources>
